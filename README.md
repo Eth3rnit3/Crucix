@@ -392,9 +392,10 @@ LANGUAGE=fr
 
 ### What Gets Translated
 
-- **Dashboard UI**: Panel titles, labels, map legends, badges
-- **LLM Output**: Trade ideas are generated in the selected language
-- **Bot Messages**: Telegram/Discord bot responses (coming soon)
+- **Dashboard UI**: All panel titles, map legends, badges, metrics labels, boot sequence text, and status messages
+- **LLM Output**: Trade ideas and system prompts are generated in the selected language
+- **Bot Messages**: Telegram and Discord bot commands, responses, and alert messages
+- **Alert Tiers**: FLASH/PRIORITY/ROUTINE labels and descriptions
 
 ### Adding a New Language
 

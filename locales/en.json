@@ -11,16 +11,66 @@
     "waitingForSweep": "Waiting for first sweep...",
     "sourcesOk": "Sources OK",
     "lastSweep": "Last sweep",
-    "nextSweep": "Next sweep"
+    "nextSweep": "Next sweep",
+    "sweep": "SWEEP",
+    "sources": "SOURCES",
+    "delta": "DELTA",
+    "highAlert": "HIGH ALERT",
+    "riskOff": "RISK-OFF",
+    "riskOn": "RISK-ON",
+    "mixed": "MIXED",
+    "terminalActive": "TERMINAL ACTIVE"
+  },
+  "boot": {
+    "initializing": "INITIALIZING CRUCIX ENGINE v2.1.0",
+    "connecting": "CONNECTING {count} OSINT SOURCES...",
+    "sourceGroup1": "OPENSKY · FIRMS · KIWISDR · MARITIME",
+    "sourceGroup2": "FRED · BLS · EIA · TREASURY · GSCPI",
+    "sourceGroup3": "TELEGRAM · SAFECAST · EPA · WHO · OFAC",
+    "sourceGroup4": "GDELT · NOAA · PATENTS · BLUESKY · REDDIT",
+    "sweepComplete": "SWEEP COMPLETE — {ok}/{total} SOURCES",
+    "ok": "OK",
+    "acledLayer": "ACLED CONFLICT LAYER",
+    "events": "EVENTS",
+    "degraded": "DEGRADED",
+    "flightCorridors": "FLIGHT CORRIDORS",
+    "active": "ACTIVE",
+    "dualProjection": "DUAL PROJECTION",
+    "ready": "READY",
+    "intelligenceSynthesis": "INTELLIGENCE SYNTHESIS"
   },
   "panels": {
-    "tradeIdeas": "Trade Ideas",
+    "sensorGrid": "Sensor Grid",
+    "tradeIdeas": "Leverageable Ideas",
     "osintFeed": "OSINT Feed",
+    "osintStream": "OSINT Stream",
     "nuclearWatch": "Nuclear Watch",
     "newsTicker": "Live News Ticker",
     "sweepDelta": "Sweep Delta",
     "macroMarkets": "Macro + Markets",
-    "healthAlerts": "Health Alerts"
+    "healthAlerts": "Health Alerts",
+    "riskGauges": "Risk Gauges",
+    "crossSourceSignals": "Cross-Source Signals",
+    "signalCore": "Signal Core"
+  },
+  "layers": {
+    "airActivity": "Air Activity",
+    "thermalSpikes": "Thermal Spikes",
+    "sdrCoverage": "SDR Coverage",
+    "maritimeWatch": "Maritime Watch",
+    "nuclearSites": "Nuclear Sites",
+    "conflictEvents": "Conflict Events",
+    "healthWatch": "Health Watch",
+    "worldNews": "World News",
+    "osintFeed": "OSINT Feed",
+    "theaters": "theaters",
+    "nightDet": "night det.",
+    "online": "online",
+    "chokepoints": "chokepoints",
+    "monitors": "monitors",
+    "fatalities": "fatalities",
+    "whoAlerts": "WHO alerts",
+    "rssGeolocated": "RSS geolocated"
   },
   "map": {
     "worldNews": "World News",
@@ -30,14 +80,27 @@
     "osintEvent": "OSINT Event",
     "thermalDetection": "Thermal Detection",
     "aircraft": "Aircraft",
-    "rssGeolocated": "RSS geolocated"
+    "rssGeolocated": "RSS geolocated",
+    "airTraffic": "Air Traffic",
+    "thermalFire": "Thermal/Fire",
+    "conflict": "Conflict",
+    "sdrReceiver": "SDR Receiver",
+    "scrollToZoom": "SCROLL TO ZOOM · DRAG TO PAN",
+    "globeMode": "GLOBE MODE",
+    "flatMode": "FLAT MODE"
   },
   "ideas": {
     "confidence": "Confidence",
     "horizon": "Horizon",
     "risk": "Risk",
     "signals": "Signals",
-    "rationale": "Rationale"
+    "rationale": "Rationale",
+    "aiEnhanced": "AI ENHANCED",
+    "llmOff": "LLM OFF",
+    "pending": "PENDING",
+    "llmNotConfigured": "LLM NOT CONFIGURED",
+    "llmHelp": "Set LLM_PROVIDER + credentials in .env to enable AI-powered trade ideas",
+    "disclosure": "FOR INFORMATIONAL PURPOSES ONLY. This is not financial advice, a recommendation to buy or sell any security, or a solicitation of any kind. All signal-based observations are derived from publicly available OSINT data and should not be relied upon for investment decisions. Consult a licensed financial advisor before making any investment. Past performance does not guarantee future results."
   },
   "regions": {
     "world": "World",
@@ -52,7 +115,11 @@
     "live": "LIVE",
     "delayed": "DELAYED",
     "items": "ITEMS",
-    "urgent": "urgent"
+    "urgent": "URGENT",
+    "worldview": "WORLDVIEW",
+    "hotMetrics": "HOT METRICS",
+    "stress": "STRESS",
+    "sweeping": "SWEEPING..."
   },
   "delta": {
     "baseline": "BASELINE",
@@ -60,7 +127,50 @@
     "deescalation": "DE-ESCALATION",
     "stable": "STABLE",
     "newSignals": "New Signals",
-    "resolved": "Resolved"
+    "resolved": "Resolved",
+    "noChanges": "No changes since last sweep",
+    "changes": "Changes",
+    "critical": "Critical",
+    "new": "NEW"
+  },
+  "metrics": {
+    "wtiCrude": "WTI Crude",
+    "brent": "Brent",
+    "natGas": "Nat Gas",
+    "vix": "VIX",
+    "fedFunds": "Fed Funds",
+    "gscpi": "GSCPI",
+    "cpiMom": "CPI MoM",
+    "unemployment": "Unemployment",
+    "hySpread": "HY Spread",
+    "usdIndex": "USD Index",
+    "joblessClaims": "Jobless Claims",
+    "mortgage30y": "30Y Mortgage",
+    "m2Supply": "M2 Supply",
+    "natDebt": "Nat. Debt",
+    "wti5day": "WTI 5-DAY",
+    "indexes": "INDEXES",
+    "crypto": "CRYPTO",
+    "energyMacro": "ENERGY + MACRO",
+    "vsPrior": "vs prior"
+  },
+  "signalMetrics": {
+    "incidentTempo": "Incident Tempo",
+    "airTheaters": "Air Theaters",
+    "thermalSpikes": "Thermal Spikes",
+    "sdrNodes": "SDR Nodes",
+    "chokepoints": "Chokepoints",
+    "whoAlerts": "WHO Alerts"
+  },
+  "nuclear": {
+    "allSitesNormal": "ALL SITES NORMAL",
+    "anomalyDetected": "ANOMALY DETECTED",
+    "noData": "No data"
+  },
+  "time": {
+    "justNow": "just now",
+    "hoursAgo": "{hours}h ago",
+    "daysAgo": "{days}d ago"
   },
   "bot": {
     "commands": {
@@ -74,14 +184,113 @@
       "help": "Show available commands"
     },
     "messages": {
-      "alertsMuted": "Alerts muted for {hours}h — until {time}",
+      "alertsMuted": "🔇 Alerts muted for {hours}h — until {time} UTC",
       "useUnmute": "Use /unmute to resume.",
-      "alertsResumed": "Alerts resumed",
-      "sweepTriggered": "Manual sweep triggered...",
-      "commandsTip": "Tip: Commands are case-insensitive"
+      "alertsResumed": "🔔 Alerts resumed. You'll receive the next signal evaluation.",
+      "sweepTriggered": "🚀 Manual sweep triggered. You'll receive alerts if anything significant is detected.",
+      "sweepInProgress": "🔄 Sweep already in progress. Please wait.",
+      "noDataYet": "⏳ No data yet — waiting for first sweep to complete.",
+      "noRecentAlerts": "No recent alerts.",
+      "recentAlerts": "📋 Recent Alerts (last {count})",
+      "commandsTip": "Tip: Commands are case-insensitive",
+      "commandFailed": "❌ Command failed: {error}",
+      "portfolioNotAvailable": "📊 Portfolio integration requires Alpaca MCP connection.\nUse the Crucix dashboard or Claude agent for portfolio queries."
+    },
+    "status": {
+      "title": "🖥️ CRUCIX STATUS",
+      "uptime": "Uptime",
+      "lastSweep": "Last sweep",
+      "nextSweep": "Next sweep",
+      "sweepInProgress": "Sweep in progress",
+      "yes": "🔄 Yes",
+      "no": "⏸️ No",
+      "sources": "Sources",
+      "failed": "failed",
+      "llm": "LLM",
+      "enabled": "✅",
+      "disabled": "❌ Disabled",
+      "sseClients": "SSE clients",
+      "dashboard": "Dashboard",
+      "pending": "pending",
+      "never": "never"
+    },
+    "brief": {
+      "title": "📋 CRUCIX BRIEF",
+      "direction": "Direction",
+      "changes": "changes",
+      "criticalChanges": "critical",
+      "osint": "📡 OSINT",
+      "urgentSignals": "urgent signals",
+      "totalPosts": "total posts",
+      "topIdeas": "💡 Top Ideas"
+    },
+    "alertTiers": {
+      "flash": "FLASH",
+      "priority": "PRIORITY",
+      "routine": "ROUTINE"
+    }
+  },
+  "alerts": {
+    "tiers": {
+      "flash": {
+        "label": "FLASH",
+        "description": "Immediate action required — market-moving, time-critical"
+      },
+      "priority": {
+        "label": "PRIORITY",
+        "description": "Important signal cluster — act within hours"
+      },
+      "routine": {
+        "label": "ROUTINE",
+        "description": "Noteworthy change — FYI, no urgency"
+      }
+    },
+    "confidence": {
+      "high": "HIGH",
+      "medium": "MEDIUM",
+      "low": "LOW"
+    },
+    "fields": {
+      "direction": "Direction",
+      "confidence": "Confidence",
+      "crossCorrelation": "Cross-Correlation",
+      "action": "Action",
+      "signals": "Signals",
+      "monitor": "Monitor"
+    },
+    "messages": {
+      "alertsMuted": "Alerts Muted",
+      "mutedUntil": "Alerts silenced for {hours}h — until {time} UTC.",
+      "useUnmuteToResume": "Use /unmute to resume.",
+      "alertsResumed": "Alerts Resumed",
+      "willReceiveNext": "You will receive the next signal evaluation."
+    },
+    "ruleBasedHeadlines": {
+      "nuclearAnomaly": "Nuclear Anomaly Detected",
+      "crossDomainSignals": "{count} Critical Cross-Domain Signals",
+      "escalatingSignals": "{count} Escalating Signals",
+      "osintSurge": "OSINT Surge: {count} New Urgent Posts",
+      "signalChangeDetected": "Signal Change Detected"
+    }
+  },
+  "discord": {
+    "commands": {
+      "status": "System health, last sweep time, source status",
+      "sweep": "Trigger a manual sweep cycle",
+      "brief": "Compact intelligence summary",
+      "portfolio": "Portfolio status (if Alpaca connected)",
+      "alerts": "Recent alert history",
+      "mute": "Mute alerts (default 1h)",
+      "unmute": "Resume alerts",
+      "muteHoursOption": "Hours to mute (default: 1)"
     }
   },
   "llm": {
     "systemPrompt": "You are a quantitative analyst at a macro intelligence firm. You receive structured OSINT + economic data from 25 sources and produce 5-8 actionable trade ideas.\n\nRules:\n- Each idea must cite specific data points from the input\n- Include entry rationale, risk factors, and time horizon\n- Blend geopolitical, economic, and market signals — cross-correlate across domains\n- Be specific: name instruments (tickers, futures, ETFs), not vague sectors\n- If delta shows significant changes, lead with those\n- Do NOT repeat ideas from the \"previous ideas\" list unless conditions have materially changed\n- Rate confidence: HIGH (multiple confirming signals), MEDIUM (thesis supported), LOW (speculative)\n\nOutput ONLY valid JSON array. Each object:\n{\n  \"title\": \"Short title (max 10 words)\",\n  \"type\": \"LONG|SHORT|HEDGE|WATCH|AVOID\",\n  \"ticker\": \"Primary instrument\",\n  \"confidence\": \"HIGH|MEDIUM|LOW\",\n  \"rationale\": \"2-3 sentence explanation citing specific data\",\n  \"risk\": \"Key risk factor\",\n  \"horizon\": \"Intraday|Days|Weeks|Months\",\n  \"signals\": [\"signal1\", \"signal2\"]\n}"
+  },
+  "api": {
+    "errors": {
+      "noDataYet": "No data yet — first sweep in progress"
+    }
   }
 }
