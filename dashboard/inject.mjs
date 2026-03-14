@@ -387,12 +387,78 @@ export async function synthesize(data) {
   // Fetch RSS
   const news = await fetchAllNews();
 
+  // === USGS Earthquakes ===
+  const usgsData = data.sources.USGS || {};
+  const usgs = {
+    totalEvents: usgsData.totalEvents || 0,
+    events: (usgsData.events || []).slice(0, 15).map(e => ({
+      id: e.id, mag: e.mag, place: e.place, time: e.time,
+      lat: e.lat, lon: e.lon, depth: e.depth, tsunami: e.tsunami, alert: e.alert
+    })),
+    byMagnitude: usgsData.byMagnitude || {},
+    byRegion: usgsData.byRegion || {},
+    signals: usgsData.signals || [],
+  };
+
+  // === ECB European Central Bank ===
+  const ecbData = data.sources.ECB || {};
+  const ecb = {
+    mainRefinancingRate: ecbData.indicators?.mainRefinancingRate?.value || null,
+    eurusd: ecbData.indicators?.eurusd?.value || null,
+    m3MoneySupply: ecbData.indicators?.m3MoneySupply?.value || null,
+    hicp: ecbData.indicators?.hicp?.value || null,
+    signals: ecbData.signals || [],
+  };
+
+  // === CVE Vulnerabilities ===
+  const cveData = data.sources.CVE || {};
+  const cve = {
+    totalVulnerabilities: cveData.totalVulnerabilities || 0,
+    bySeverity: cveData.bySeverity || {},
+    topVulnerabilities: (cveData.topVulnerabilities || []).slice(0, 10).map(v => ({
+      id: v.id, cvssScore: v.cvssScore, severity: v.severity,
+      description: v.description?.substring(0, 150), published: v.published,
+      affectedProducts: (v.affectedProducts || []).slice(0, 3),
+    })),
+    topProducts: cveData.topProducts || [],
+    signals: cveData.signals || [],
+  };
+
+  // === Copernicus EU Satellite ===
+  const copernicusData = data.sources.Copernicus || {};
+  const copernicus = {
+    totalAlerts: copernicusData.totalAlerts || 0,
+    alerts: (copernicusData.alerts || []).slice(0, 10).map(a => ({
+      title: a.title, description: a.description?.substring(0, 100),
+      type: a.type, lat: a.lat, lon: a.lon, date: a.date, source: a.source
+    })),
+    byType: copernicusData.byType || {},
+    byRegion: copernicusData.byRegion || {},
+    signals: copernicusData.signals || [],
+  };
+
+  // === Space/CelesTrak ===
+  const spaceData = data.sources.Space || {};
+  const space = {
+    totalNewObjects: spaceData.totalNewObjects || 0,
+    recentLaunches: (spaceData.recentLaunches || []).slice(0, 10).map(l => ({
+      name: l.name, noradId: l.noradId, country: l.country,
+      launchDate: l.launchDate, epoch: l.epoch
+    })),
+    launchByCountry: spaceData.launchByCountry || {},
+    iss: spaceData.iss || null,
+    militarySatellites: spaceData.militarySatellites || 0,
+    constellations: spaceData.constellations || {},
+    signals: spaceData.signals || [],
+  };
+
   const V2 = {
     meta: data.crucix, air, thermal, tSignals, chokepoints, nuke, nukeSignals,
     sdr: { total: sdrNet.totalReceivers || 0, online: sdrNet.online || 0, zones: sdrZones },
     tg: { posts: tgData.totalPosts || 0, urgent: tgUrgent, topPosts: tgTop },
     who, fred, energy, bls, treasury, gscpi, defense, noaa, acled, gdelt, health, news,
     markets, // Live Yahoo Finance market data
+    usgs, ecb, cve, copernicus, space, // New sources
     ideas: [], ideasSource: 'disabled',
     // newsFeed for ticker (merged RSS + GDELT + Telegram)
     newsFeed: buildNewsFeed(news, gdeltData, tgUrgent, tgTop),

@@ -7,7 +7,7 @@
   "dashboard": {
     "title": "CRUCIX — Intelligence Terminal",
     "bootTitle": "CRUCIX INTELLIGENCE ENGINE",
-    "bootSubtitle": "Local Palantir · 26 Sources",
+    "bootSubtitle": "Local Palantir · 31 Sources",
     "waitingForSweep": "Waiting for first sweep...",
     "sourcesOk": "Sources OK",
     "lastSweep": "Last sweep",
@@ -51,7 +51,12 @@
     "healthAlerts": "Health Alerts",
     "riskGauges": "Risk Gauges",
     "crossSourceSignals": "Cross-Source Signals",
-    "signalCore": "Signal Core"
+    "signalCore": "Signal Core",
+    "seismicWatch": "Seismic Watch",
+    "cyberWatch": "Cyber Watch",
+    "spaceWatch": "Space Watch",
+    "europeAlerts": "Europe Alerts",
+    "ecbIndicators": "ECB Indicators"
   },
   "layers": {
     "airActivity": "Air Activity",
@@ -70,7 +75,12 @@
     "monitors": "monitors",
     "fatalities": "fatalities",
     "whoAlerts": "WHO alerts",
-    "rssGeolocated": "RSS geolocated"
+    "rssGeolocated": "RSS geolocated",
+    "earthquakes": "Earthquakes",
+    "seismicEvents": "Seismic Events",
+    "cyberVulns": "Cyber Vulnerabilities",
+    "spaceActivity": "Space Activity",
+    "europeEmergency": "Europe Emergency"
   },
   "map": {
     "worldNews": "World News",
@@ -152,7 +162,16 @@
     "indexes": "INDEXES",
     "crypto": "CRYPTO",
     "energyMacro": "ENERGY + MACRO",
-    "vsPrior": "vs prior"
+    "vsPrior": "vs prior",
+    "ecbRate": "ECB Rate",
+    "eurusd": "EUR/USD",
+    "euM3": "EU M3",
+    "euHicp": "EU HICP",
+    "earthquakes7d": "Earthquakes (7d)",
+    "criticalCves": "Critical CVEs",
+    "spaceObjects": "Space Objects",
+    "starlink": "Starlink",
+    "europeAlerts": "EU Alerts"
   },
   "signalMetrics": {
     "incidentTempo": "Incident Tempo",
@@ -166,6 +185,29 @@
     "allSitesNormal": "ALL SITES NORMAL",
     "anomalyDetected": "ANOMALY DETECTED",
     "noData": "No data"
+  },
+  "seismic": {
+    "noRecentQuakes": "NO SIGNIFICANT QUAKES",
+    "majorQuake": "MAJOR QUAKE DETECTED",
+    "tsunamiRisk": "TSUNAMI RISK",
+    "mag": "M"
+  },
+  "cyber": {
+    "noAlerts": "NO CRITICAL CVES",
+    "criticalAlert": "CRITICAL VULNERABILITIES",
+    "cvss": "CVSS"
+  },
+  "space": {
+    "noActivity": "NORMAL ACTIVITY",
+    "launchDetected": "LAUNCH ACTIVITY",
+    "objectsTracked": "objects tracked",
+    "satellites": "satellites"
+  },
+  "europe": {
+    "noAlerts": "NO ACTIVE ALERTS",
+    "activeAlerts": "ACTIVE ALERTS",
+    "fires": "Fires",
+    "floods": "Floods"
   },
   "time": {
     "justNow": "just now",

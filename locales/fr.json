@@ -7,7 +7,7 @@
   "dashboard": {
     "title": "CRUCIX — Terminal de Renseignement",
     "bootTitle": "CRUCIX MOTEUR DE RENSEIGNEMENT",
-    "bootSubtitle": "Palantir Local · 26 Sources",
+    "bootSubtitle": "Palantir Local · 31 Sources",
     "waitingForSweep": "En attente du premier scan...",
     "sourcesOk": "Sources OK",
     "lastSweep": "Dernier scan",
@@ -51,7 +51,12 @@
     "healthAlerts": "Alertes Santé",
     "riskGauges": "Indicateurs de Risque",
     "crossSourceSignals": "Signaux Multi-Sources",
-    "signalCore": "Noyau de Signaux"
+    "signalCore": "Noyau de Signaux",
+    "seismicWatch": "Surveillance Sismique",
+    "cyberWatch": "Surveillance Cyber",
+    "spaceWatch": "Surveillance Spatiale",
+    "europeAlerts": "Alertes Europe",
+    "ecbIndicators": "Indicateurs BCE"
   },
   "layers": {
     "airActivity": "Activité Aérienne",
@@ -70,7 +75,12 @@
     "monitors": "moniteurs",
     "fatalities": "victimes",
     "whoAlerts": "alertes OMS",
-    "rssGeolocated": "RSS géolocalisé"
+    "rssGeolocated": "RSS géolocalisé",
+    "earthquakes": "Séismes",
+    "seismicEvents": "Événements Sismiques",
+    "cyberVulns": "Vulnérabilités Cyber",
+    "spaceActivity": "Activité Spatiale",
+    "europeEmergency": "Urgences Europe"
   },
   "map": {
     "worldNews": "Actualités",
@@ -152,7 +162,16 @@
     "indexes": "INDICES",
     "crypto": "CRYPTO",
     "energyMacro": "ÉNERGIE + MACRO",
-    "vsPrior": "vs précédent"
+    "vsPrior": "vs précédent",
+    "ecbRate": "Taux BCE",
+    "eurusd": "EUR/USD",
+    "euM3": "M3 UE",
+    "euHicp": "IPCH UE",
+    "earthquakes7d": "Séismes (7j)",
+    "criticalCves": "CVE Critiques",
+    "spaceObjects": "Objets Spatiaux",
+    "starlink": "Starlink",
+    "europeAlerts": "Alertes UE"
   },
   "signalMetrics": {
     "incidentTempo": "Tempo Incidents",
@@ -166,6 +185,29 @@
     "allSitesNormal": "TOUS LES SITES NORMAUX",
     "anomalyDetected": "ANOMALIE DÉTECTÉE",
     "noData": "Pas de données"
+  },
+  "seismic": {
+    "noRecentQuakes": "PAS DE SÉISME SIGNIFICATIF",
+    "majorQuake": "SÉISME MAJEUR DÉTECTÉ",
+    "tsunamiRisk": "RISQUE TSUNAMI",
+    "mag": "M"
+  },
+  "cyber": {
+    "noAlerts": "PAS DE CVE CRITIQUE",
+    "criticalAlert": "VULNÉRABILITÉS CRITIQUES",
+    "cvss": "CVSS"
+  },
+  "space": {
+    "noActivity": "ACTIVITÉ NORMALE",
+    "launchDetected": "ACTIVITÉ DE LANCEMENT",
+    "objectsTracked": "objets suivis",
+    "satellites": "satellites"
+  },
+  "europe": {
+    "noAlerts": "PAS D'ALERTES ACTIVES",
+    "activeAlerts": "ALERTES ACTIVES",
+    "fires": "Incendies",
+    "floods": "Inondations"
   },
   "time": {
     "justNow": "à l'instant",

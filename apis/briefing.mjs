@@ -40,6 +40,13 @@ import { briefing as kiwisdr } from './sources/kiwisdr.mjs';
 // === Tier 4: Live Market Data ===
 import { briefing as yfinance } from './sources/yfinance.mjs';
 
+// === Tier 5: Additional Global Sources ===
+import { briefing as usgs } from './sources/usgs.mjs';
+import { briefing as ecb } from './sources/ecb.mjs';
+import { briefing as cve } from './sources/cve.mjs';
+import { briefing as copernicus } from './sources/copernicus.mjs';
+import { briefing as space } from './sources/space.mjs';
+
 export async function runSource(name, fn, ...args) {
   const start = Date.now();
   try {
@@ -51,7 +58,7 @@ export async function runSource(name, fn, ...args) {
 }
 
 export async function fullBriefing() {
-  console.error('[Crucix] Starting intelligence sweep — 26 sources...');
+  console.error('[Crucix] Starting intelligence sweep — 31 sources...');
   const start = Date.now();
 
   const results = await Promise.allSettled([
@@ -88,6 +95,13 @@ export async function fullBriefing() {
 
     // Tier 4: Live Market Data
     runSource('YFinance', yfinance),
+
+    // Tier 5: Additional Global Sources
+    runSource('USGS', usgs),
+    runSource('ECB', ecb),
+    runSource('CVE', cve),
+    runSource('Copernicus', copernicus),
+    runSource('Space', space),
   ]);
 
   const sources = results.map(r => r.status === 'fulfilled' ? r.value : { status: 'failed', error: r.reason?.message });
