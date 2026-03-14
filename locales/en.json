@@ -28,6 +28,7 @@
     "sourceGroup2": "FRED · BLS · EIA · TREASURY · GSCPI",
     "sourceGroup3": "TELEGRAM · SAFECAST · EPA · WHO · OFAC",
     "sourceGroup4": "GDELT · NOAA · PATENTS · BLUESKY · REDDIT",
+    "sourceGroup5": "USGS · ECB · CVE · COPERNICUS · CELESTRAK",
     "sweepComplete": "SWEEP COMPLETE — {ok}/{total} SOURCES",
     "ok": "OK",
     "acledLayer": "ACLED CONFLICT LAYER",
@@ -97,7 +98,9 @@
     "sdrReceiver": "SDR Receiver",
     "scrollToZoom": "SCROLL TO ZOOM · DRAG TO PAN",
     "globeMode": "GLOBE MODE",
-    "flatMode": "FLAT MODE"
+    "flatMode": "FLAT MODE",
+    "earthquake": "Earthquake",
+    "disaster": "Disaster"
   },
   "ideas": {
     "confidence": "Confidence",
@@ -129,7 +132,9 @@
     "worldview": "WORLDVIEW",
     "hotMetrics": "HOT METRICS",
     "stress": "STRESS",
-    "sweeping": "SWEEPING..."
+    "sweeping": "SWEEPING...",
+    "europe": "EUROPE",
+    "orbital": "ORBITAL"
   },
   "delta": {
     "baseline": "BASELINE",
@@ -195,19 +200,26 @@
   "cyber": {
     "noAlerts": "NO CRITICAL CVES",
     "criticalAlert": "CRITICAL VULNERABILITIES",
-    "cvss": "CVSS"
+    "cvss": "CVSS",
+    "critical": "CRITICAL"
   },
   "space": {
     "noActivity": "NORMAL ACTIVITY",
     "launchDetected": "LAUNCH ACTIVITY",
     "objectsTracked": "objects tracked",
-    "satellites": "satellites"
+    "satellites": "sats",
+    "recentLaunches": "Recent Launches",
+    "totalTracked": "Total Tracked",
+    "byCountry": "BY COUNTRY",
+    "constellations": "CONSTELLATIONS",
+    "launches": "launches"
   },
   "europe": {
     "noAlerts": "NO ACTIVE ALERTS",
     "activeAlerts": "ACTIVE ALERTS",
     "fires": "Fires",
-    "floods": "Floods"
+    "floods": "Floods",
+    "types": "types"
   },
   "time": {
     "justNow": "just now",

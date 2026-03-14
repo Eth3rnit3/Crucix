@@ -345,7 +345,11 @@ function renderLeftRail(){
     {name:t('layers.conflictEvents','Conflict Events'),count:conflictEvents,dot:'thermal',sub:`${conflictFatal.toLocaleString()} ${t('layers.fatalities','fatalities')}`},
     {name:t('layers.healthWatch','Health Watch'),count:D.who.length,dot:'health',sub:t('layers.whoAlerts','WHO alerts')},
     {name:t('layers.worldNews','World News'),count:newsCount,dot:'news',sub:t('layers.rssGeolocated','RSS geolocated')},
-    {name:t('layers.osintFeed','OSINT Feed'),count:D.tg.posts,dot:'incident',sub:`${D.tg.urgent.length} ${t('badges.urgent','urgent').toLowerCase()}`}
+    {name:t('layers.osintFeed','OSINT Feed'),count:D.tg.posts,dot:'incident',sub:`${D.tg.urgent.length} ${t('badges.urgent','urgent').toLowerCase()}`},
+    {name:t('layers.earthquakes','Earthquakes'),count:D.usgs?.totalEvents||0,dot:'thermal',sub:`${Object.keys(D.usgs?.byMagnitude||{}).filter(k=>k.includes('6')||k.includes('7')).reduce((s,k)=>s+(D.usgs?.byMagnitude[k]||0),0)} M6+`},
+    {name:t('layers.cyberVulns','Cyber Vulnerabilities'),count:D.cve?.totalVulnerabilities||0,dot:'incident',sub:`${D.cve?.bySeverity?.critical||0} ${t('cyber.cvss','critical').toLowerCase()}`},
+    {name:t('layers.spaceActivity','Space Activity'),count:D.space?.totalNewObjects||0,dot:'sdr',sub:`${D.space?.recentLaunches?.length||0} ${t('space.launches','launches').toLowerCase()}`},
+    {name:t('layers.europeEmergency','Europe Emergency'),count:D.copernicus?.totalAlerts||0,dot:'health',sub:`${Object.keys(D.copernicus?.byType||{}).length} ${t('europe.types','types').toLowerCase()}`}
   ];
   const allNormal=D.nuke.every(s=>!s.anom);
   const nukeHtml=D.nuke.map(s=>`<div class="site-row"><span>${s.site}</span><span class="site-val">${s.n>0?(s.cpm?.toFixed(1)||'--')+' CPM':t('nuclear.noData','No data')}</span></div>`).join('');
@@ -375,6 +379,13 @@ function renderLeftRail(){
       <div class="econ-row"><span class="elabel">${t('metrics.mortgage30y','30Y Mortgage')}</span><span class="eval">${mort?.value||'--'}%</span></div>
       <div class="econ-row"><span class="elabel">${t('metrics.m2Supply','M2 Supply')}</span><span class="eval">$${(m2?.value/1000)?.toFixed(1)||'--'}T</span></div>
       <div class="econ-row"><span class="elabel">${t('metrics.natDebt','Nat. Debt')}</span><span class="eval">$${(parseFloat(D.treasury.totalDebt)/1e12).toFixed(2)}T</span></div>
+    </div>
+    <div class="g-panel">
+      <div class="sec-head"><h3>${t('panels.ecbIndicators','ECB Indicators')}</h3><span class="badge">${t('badges.europe','EUROPE')}</span></div>
+      <div class="econ-row"><span class="elabel">${t('metrics.ecbRate','ECB Rate')}</span><span class="eval">${D.ecb?.mainRefinancingRate!=null?D.ecb.mainRefinancingRate+'%':'--'}</span></div>
+      <div class="econ-row"><span class="elabel">${t('metrics.eurusd','EUR/USD')}</span><span class="eval">${D.ecb?.eurusd?.toFixed(4)||'--'}</span></div>
+      <div class="econ-row"><span class="elabel">${t('metrics.euM3','EU M3')}</span><span class="eval">${D.ecb?.m3MoneySupply?'€'+(D.ecb.m3MoneySupply/1000).toFixed(1)+'T':'--'}</span></div>
+      <div class="econ-row"><span class="elabel">${t('metrics.euHicp','EU HICP')}</span><span class="eval" style="color:${D.ecb?.hicp>2.5?'var(--warn)':'var(--accent)'}">${D.ecb?.hicp!=null?D.ecb.hicp+'%':'--'}</span></div>
     </div>`;
 }
 
@@ -423,7 +434,8 @@ function initMap(){
   // Legend
   document.getElementById('mapLegend').innerHTML=
     [{c:'var(--accent)',l:t('map.airTraffic','Air Traffic')},{c:'var(--danger)',l:t('map.thermalFire','Thermal/Fire')},{c:'rgba(255,120,80,0.8)',l:t('map.conflict','Conflict')},{c:'var(--accent2)',l:t('map.sdrReceiver','SDR Receiver')},
-     {c:'#ffe082',l:t('map.nuclearSite','Nuclear Site')},{c:'#b388ff',l:t('map.chokepoint','Chokepoint')},{c:'var(--warn)',l:t('map.osintEvent','OSINT Event')},{c:'#69f0ae',l:t('map.healthAlert','Health Alert')},{c:'#81d4fa',l:t('map.worldNews','World News')}]
+     {c:'#ffe082',l:t('map.nuclearSite','Nuclear Site')},{c:'#b388ff',l:t('map.chokepoint','Chokepoint')},{c:'var(--warn)',l:t('map.osintEvent','OSINT Event')},{c:'#69f0ae',l:t('map.healthAlert','Health Alert')},{c:'#81d4fa',l:t('map.worldNews','World News')},
+     {c:'rgba(255,184,76,0.8)',l:t('map.earthquake','Earthquake')},{c:'rgba(68,204,255,0.8)',l:t('map.disaster','Disaster')}]
     .map(x=>`<div class="leg-item"><div class="leg-dot" style="background:${x.c}"></div>${x.l}</div>`).join('');
 }
 
@@ -522,6 +534,43 @@ function plotMarkers(){
     g.append('path').attr('class','news-icon marker-circle').attr('data-base-r',s)
       .attr('d',`M0,${s*0.3} L${-s*0.25},${s*0.5} L${-s*0.25},${-s*0.5} L0,${-s*0.3} Z M${s*0.15},${-s*0.55} A${s*0.55},${s*0.55} 0 0,1 ${s*0.15},${s*0.55} M${s*0.3},${-s*0.75} A${s*0.8},${s*0.8} 0 0,1 ${s*0.3},${s*0.75}`)
       .attr('fill','none').attr('stroke','rgba(129,212,250,0.8)').attr('stroke-width',1.2).attr('stroke-linecap','round');
+  });
+
+  // === USGS EARTHQUAKES (seismic markers) ===
+  const quakeEvents = (D.usgs?.events || []).filter(e => e.lat && e.lon);
+  quakeEvents.forEach(e => {
+    const [x,y] = projection([e.lon, e.lat]);
+    if(!x || !y) return;
+    // Color based on magnitude: green < 5, yellow 5-6, red > 6
+    const mag = e.mag || 0;
+    const color = mag >= 6 ? 'rgba(255,95,99,0.8)' : mag >= 5 ? 'rgba(255,184,76,0.8)' : 'rgba(100,240,200,0.7)';
+    const r = Math.max(3, Math.min(10, 2 + mag * 0.8));
+    const g = markersG.append('g').attr('transform',`translate(${x},${y})`)
+      .style('cursor','pointer')
+      .on('click',(ev)=>{ev.stopPropagation();showPopup(ev, t('map.earthquake','EARTHQUAKE')+' M'+mag.toFixed(1), `${e.place}<br>Depth: ${e.depth?.toFixed(1)||'?'}km<br>Time: ${new Date(e.time).toLocaleString()}${e.tsunami?' <span style="color:var(--warn)">⚠ TSUNAMI RISK</span>':''}`, 'USGS Seismic')});
+    g.append('circle').attr('class','marker-circle').attr('r',r).attr('data-base-r',r)
+      .attr('fill',color.replace('0.8','0.5').replace('0.7','0.4')).attr('stroke',color).attr('stroke-width',1.5);
+    // Add seismic wave rings for major quakes
+    if(mag >= 5.5) {
+      g.append('circle').attr('class','conflict-ring marker-circle').attr('r',r*1.8).attr('data-base-r',r*1.8)
+        .attr('fill','none').attr('stroke',color).attr('stroke-width',0.8).attr('opacity',0.5);
+    }
+  });
+
+  // === COPERNICUS/GDACS DISASTERS (fire/flood/storm markers) ===
+  const disasterAlerts = (D.copernicus?.alerts || []).filter(a => a.lat && a.lon);
+  disasterAlerts.forEach(a => {
+    const [x,y] = projection([a.lon, a.lat]);
+    if(!x || !y) return;
+    // Color based on type
+    const typeColors = {fire:'rgba(255,95,99,0.8)',flood:'rgba(68,204,255,0.8)',storm:'rgba(179,136,255,0.8)',earthquake:'rgba(255,184,76,0.8)'};
+    const color = typeColors[a.type?.toLowerCase()] || 'rgba(255,184,76,0.7)';
+    const g = markersG.append('g').attr('transform',`translate(${x},${y})`)
+      .style('cursor','pointer')
+      .on('click',(ev)=>{ev.stopPropagation();showPopup(ev, (a.type||'DISASTER').toUpperCase(), `${a.title||a.description||''}<br>${a.date?'Date: '+a.date:''}`, 'Copernicus/GDACS')});
+    g.append('polygon').attr('class','marker-circle').attr('data-base-r',6)
+      .attr('points','0,-6 5.2,3 -5.2,3').attr('fill',color).attr('stroke',color.replace(/[\d.]+\)$/,'0.4)'))
+      .attr('stroke-width',0.8);
   });
 
   // === ACLED CONFLICT EVENTS (pulsing red-orange rings) ===
@@ -954,10 +1003,62 @@ function renderRight(){
     {l:t('signalMetrics.whoAlerts','WHO Alerts'),v:D.who.length,p:40}
   ];
 
+  // === CYBER WATCH PANEL ===
+  const cveData = D.cve || {};
+  const criticalCves = cveData.bySeverity?.critical || 0;
+  const highCves = cveData.bySeverity?.high || 0;
+  const topCves = (cveData.topVulnerabilities || []).slice(0,5);
+  const cveStatusOk = criticalCves === 0;
+  const cveHtml = topCves.length ? topCves.map(v => {
+    const sevColor = v.severity === 'critical' ? 'var(--danger)' : v.severity === 'high' ? 'var(--warn)' : 'var(--accent)';
+    const products = (v.affectedProducts || []).join(', ') || 'Multiple vendors';
+    return `<div class="site-row" style="border-left:2px solid ${sevColor}"><span style="font-family:var(--mono);font-size:9px;color:${sevColor}">${v.id}</span><span class="site-val">${t('cyber.cvss','CVSS')} ${v.cvssScore?.toFixed(1)||'?'}</span></div>
+    <div style="font-size:9px;color:var(--dim);padding:2px 8px 6px;border-bottom:1px solid rgba(255,255,255,0.04)">${(v.description||'').substring(0,80)}... <span style="color:var(--accent2)">${products.substring(0,25)}</span></div>`;
+  }).join('') : `<div style="padding:10px;text-align:center;color:var(--dim);font-size:10px">${t('cyber.noAlerts','NO CRITICAL CVES')}</div>`;
+
+  // === SPACE WATCH PANEL ===
+  const spaceData = D.space || {};
+  const recentLaunches = spaceData.recentLaunches || [];
+  const launchByCountry = spaceData.launchByCountry || {};
+  const constellations = spaceData.constellations || {};
+  const topCountries = Object.entries(launchByCountry).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  const topConstellations = Object.entries(constellations).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  const spaceHtml = `
+    <div class="econ-row"><span class="elabel">${t('space.recentLaunches','Recent Launches')}</span><span class="eval" style="color:var(--accent)">${recentLaunches.length}</span></div>
+    <div class="econ-row"><span class="elabel">${t('space.totalTracked','Total Tracked')}</span><span class="eval">${spaceData.totalNewObjects||0}</span></div>
+    ${topCountries.length ? `<div style="margin-top:6px;font-size:9px;color:var(--dim);font-family:var(--mono)">${t('space.byCountry','BY COUNTRY')}</div>
+    ${topCountries.map(([c,n])=>`<div class="econ-row"><span class="elabel">${c}</span><span class="eval">${n}</span></div>`).join('')}` : ''}
+    ${topConstellations.length ? `<div style="margin-top:6px;font-size:9px;color:var(--dim);font-family:var(--mono)">${t('space.constellations','CONSTELLATIONS')}</div>
+    ${topConstellations.map(([c,n])=>`<div class="econ-row"><span class="elabel">${c}</span><span class="eval">${n} ${t('space.satellites','sats')}</span></div>`).join('')}` : ''}`;
+
+  // === SEISMIC WATCH PANEL ===
+  const usgsData = D.usgs || {};
+  const quakeEvents = (usgsData.events || []).slice(0,5);
+  const majorQuakes = quakeEvents.filter(e => e.mag >= 5);
+  const seismicStatusOk = majorQuakes.length === 0;
+  const quakeHtml = quakeEvents.length ? quakeEvents.map(e => {
+    const magColor = e.mag >= 6 ? 'var(--danger)' : e.mag >= 5 ? 'var(--warn)' : 'var(--accent)';
+    return `<div class="site-row"><span style="color:${magColor};font-weight:600">${t('seismic.mag','M')}${e.mag?.toFixed(1)}</span><span class="site-val" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.place?.substring(0,30)||'Unknown'}</span></div>`;
+  }).join('') : `<div style="padding:10px;text-align:center;color:var(--dim);font-size:10px">${t('seismic.noRecentQuakes','NO SIGNIFICANT QUAKES')}</div>`;
+
   document.getElementById('rightRail').innerHTML=`
     <div class="g-panel">
       <div class="sec-head"><h3>${t('panels.crossSourceSignals','Cross-Source Signals')}</h3><span class="badge">${t('badges.worldview','WORLDVIEW')}</span></div>
       ${signals}
+    </div>
+    <div class="g-panel">
+      <div class="sec-head"><h3>${t('panels.seismicWatch','Seismic Watch')}</h3><span class="badge" style="${seismicStatusOk?'':'color:var(--warn);border-color:rgba(255,184,76,0.4)'}">${seismicStatusOk?t('seismic.noRecentQuakes','NORMAL'):majorQuakes.length+' M5+'}</span></div>
+      <div class="nuke-ok" style="${seismicStatusOk?'':'background:rgba(255,184,76,0.08);border-color:rgba(255,184,76,0.2);color:var(--warn)'}">${seismicStatusOk?'&#9679; '+t('seismic.noRecentQuakes','NO SIGNIFICANT QUAKES'):'&#9888; '+t('seismic.majorQuake','MAJOR QUAKE DETECTED')}</div>
+      ${quakeHtml}
+    </div>
+    <div class="g-panel">
+      <div class="sec-head"><h3>${t('panels.cyberWatch','Cyber Watch')}</h3><span class="badge" style="${cveStatusOk?'':'color:var(--danger);border-color:rgba(255,95,99,0.4)'}">${criticalCves} ${t('cyber.critical','CRITICAL')}</span></div>
+      <div class="nuke-ok" style="${cveStatusOk?'':'background:rgba(255,95,99,0.08);border-color:rgba(255,95,99,0.2);color:var(--danger)'}">${cveStatusOk?'&#9679; '+t('cyber.noAlerts','NO CRITICAL CVES'):'&#9888; '+criticalCves+' '+t('cyber.criticalAlert','CRITICAL VULNERABILITIES')}</div>
+      ${cveHtml}
+    </div>
+    <div class="g-panel">
+      <div class="sec-head"><h3>${t('panels.spaceWatch','Space Watch')}</h3><span class="badge">${t('badges.orbital','ORBITAL')}</span></div>
+      ${spaceHtml}
     </div>
     <div class="g-panel" style="display:flex;flex-direction:column">
       <div class="sec-head"><h3>${t('panels.osintStream','OSINT Stream')}</h3><span class="badge">${D.tg.urgent.length} ${t('badges.urgent','URGENT')}</span></div>
@@ -990,7 +1091,8 @@ function runBoot(){
     {text:'&#9500;&#9472; '+t('boot.sourceGroup1','OPENSKY · FIRMS · KIWISDR · MARITIME'),delay:700},
     {text:'&#9500;&#9472; '+t('boot.sourceGroup2','FRED · BLS · EIA · TREASURY · GSCPI'),delay:900},
     {text:'&#9500;&#9472; '+t('boot.sourceGroup3','TELEGRAM · SAFECAST · EPA · WHO · OFAC'),delay:1100},
-    {text:'&#9492;&#9472; '+t('boot.sourceGroup4','GDELT · NOAA · PATENTS · BLUESKY · REDDIT'),delay:1300},
+    {text:'&#9500;&#9472; '+t('boot.sourceGroup4','GDELT · NOAA · PATENTS · BLUESKY · REDDIT'),delay:1300},
+    {text:'&#9492;&#9472; '+t('boot.sourceGroup5','USGS · ECB · CVE · COPERNICUS · CELESTRAK'),delay:1500},
     {text:t('boot.sweepComplete','SWEEP COMPLETE — {ok}/{total} SOURCES').replace('{ok}',`<span class="count">${D.meta.sourcesOk}</span>`).replace('{total}',D.meta.sourcesQueried)+` <span class="ok">${t('boot.ok','OK')}</span>`,delay:1700},
     {text:`${t('boot.acledLayer','ACLED CONFLICT LAYER')}: ${acledStatus}`,delay:1900},
     {text:`${t('boot.flightCorridors','FLIGHT CORRIDORS')}: <span class="ok">${t('boot.active','ACTIVE')}</span> &#183; ${t('boot.dualProjection','DUAL PROJECTION')}: <span class="ok">${t('boot.ready','READY')}</span>`,delay:2100},
