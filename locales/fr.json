@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "code": "fr",
+    "name": "French",
+    "nativeName": "Français"
+  },
+  "dashboard": {
+    "title": "CRUCIX — Terminal de Renseignement",
+    "bootTitle": "CRUCIX MOTEUR DE RENSEIGNEMENT",
+    "bootSubtitle": "Palantir Local · 26 Sources",
+    "waitingForSweep": "En attente du premier scan...",
+    "sourcesOk": "Sources OK",
+    "lastSweep": "Dernier scan",
+    "nextSweep": "Prochain scan"
+  },
+  "panels": {
+    "tradeIdeas": "Idées de Trade",
+    "osintFeed": "Flux OSINT",
+    "nuclearWatch": "Surveillance Nucléaire",
+    "newsTicker": "Fil d'Actualités",
+    "sweepDelta": "Changements",
+    "macroMarkets": "Macro + Marchés",
+    "healthAlerts": "Alertes Santé"
+  },
+  "map": {
+    "worldNews": "Actualités",
+    "healthAlert": "Alerte Santé",
+    "chokepoint": "Point Stratégique",
+    "nuclearSite": "Site Nucléaire",
+    "osintEvent": "Événement OSINT",
+    "thermalDetection": "Détection Thermique",
+    "aircraft": "Aéronef",
+    "rssGeolocated": "RSS géolocalisé"
+  },
+  "ideas": {
+    "confidence": "Confiance",
+    "horizon": "Horizon",
+    "risk": "Risque",
+    "signals": "Signaux",
+    "rationale": "Analyse"
+  },
+  "regions": {
+    "world": "Monde",
+    "americas": "Amériques",
+    "europe": "Europe",
+    "middleEast": "Moyen-Orient",
+    "asiaPacific": "Asie-Pacifique",
+    "africa": "Afrique"
+  },
+  "badges": {
+    "radiation": "RADIATION",
+    "live": "EN DIRECT",
+    "delayed": "DIFFÉRÉ",
+    "items": "ÉLÉMENTS",
+    "urgent": "urgent"
+  },
+  "delta": {
+    "baseline": "RÉFÉRENCE",
+    "escalation": "ESCALADE",
+    "deescalation": "DÉSESCALADE",
+    "stable": "STABLE",
+    "newSignals": "Nouveaux Signaux",
+    "resolved": "Résolus"
+  },
+  "bot": {
+    "commands": {
+      "status": "État du système, dernier scan, statut des sources",
+      "sweep": "Déclencher un scan manuel",
+      "brief": "Résumé compact des derniers renseignements",
+      "portfolio": "Positions et P&L (si Alpaca connecté)",
+      "alerts": "Historique des alertes récentes",
+      "mute": "Couper les alertes 1h (ou /mute 2h, /mute 4h)",
+      "unmute": "Reprendre les alertes",
+      "help": "Afficher les commandes disponibles"
+    },
+    "messages": {
+      "alertsMuted": "Alertes coupées pour {hours}h — jusqu'à {time}",
+      "useUnmute": "Utilisez /unmute pour reprendre.",
+      "alertsResumed": "Alertes reprises",
+      "sweepTriggered": "Scan manuel déclenché...",
+      "commandsTip": "Astuce : Les commandes ne sont pas sensibles à la casse"
+    }
+  },
+  "llm": {
+    "systemPrompt": "Tu es un analyste quantitatif dans une firme de renseignement macro. Tu reçois des données OSINT + économiques structurées de 25 sources et tu produis 5-8 idées de trade actionnables.\n\nRègles:\n- Chaque idée doit citer des données spécifiques de l'input\n- Inclure le rationnel d'entrée, les facteurs de risque et l'horizon temporel\n- Croiser les signaux géopolitiques, économiques et de marché\n- Être spécifique: nommer les instruments (tickers, futures, ETFs), pas des secteurs vagues\n- Si le delta montre des changements significatifs, commencer par ceux-là\n- NE PAS répéter les idées de la liste \"previous ideas\" sauf si les conditions ont matériellement changé\n- Évaluer la confiance: HIGH (signaux multiples confirmants), MEDIUM (thèse supportée), LOW (spéculatif)\n\nOutput UNIQUEMENT un tableau JSON valide. Chaque objet:\n{\n  \"title\": \"Titre court en français (max 10 mots)\",\n  \"type\": \"LONG|SHORT|HEDGE|WATCH|AVOID\",\n  \"ticker\": \"Instrument principal\",\n  \"confidence\": \"HIGH|MEDIUM|LOW\",\n  \"rationale\": \"Explication 2-3 phrases en français citant les données spécifiques\",\n  \"risk\": \"Facteur de risque principal en français\",\n  \"horizon\": \"Intraday|Days|Weeks|Months\",\n  \"signals\": [\"signal1\", \"signal2\"]\n}"
+  }
+}

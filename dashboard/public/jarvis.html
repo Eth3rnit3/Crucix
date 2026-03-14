@@ -276,6 +276,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 <script>
 // === DATA ===
 let D = null;
+
+// === I18N ===
+const L = window.__CRUCIX_LOCALE__ || {};
+function t(keyPath, fallback) {
+  const keys = keyPath.split('.');
+  let value = L;
+  for (const key of keys) {
+    if (value && typeof value === 'object' && key in value) {
+      value = value[key];
+    } else {
+      return fallback || keyPath;
+    }
+  }
+  return typeof value === 'string' ? value : (fallback || keyPath);
+}
+
 // === GLOBALS ===
 let projection, path, svg, allG, zoomBehavior, mapW, mapH;
 const regionBounds = {
@@ -327,8 +343,8 @@ function renderLeftRail(){
     {name:'Nuclear Sites',count:D.nuke.length,dot:'nuke',sub:'monitors'},
     {name:'Conflict Events',count:conflictEvents,dot:'thermal',sub:`${conflictFatal.toLocaleString()} fatalities`},
     {name:'Health Watch',count:D.who.length,dot:'health',sub:'WHO alerts'},
-    {name:'World News',count:newsCount,dot:'news',sub:'RSS geolocated'},
-    {name:'OSINT Feed',count:D.tg.posts,dot:'incident',sub:`${D.tg.urgent.length} urgent`}
+    {name:t('map.worldNews','World News'),count:newsCount,dot:'news',sub:t('map.rssGeolocated','RSS geolocated')},
+    {name:t('panels.osintFeed','OSINT Feed'),count:D.tg.posts,dot:'incident',sub:`${D.tg.urgent.length} ${t('badges.urgent','urgent')}`}
   ];
   const allNormal=D.nuke.every(s=>!s.anom);
   const nukeHtml=D.nuke.map(s=>`<div class="site-row"><span>${s.site}</span><span class="site-val">${s.n>0?(s.cpm?.toFixed(1)||'--')+' CPM':'No data'}</span></div>`).join('');
@@ -345,7 +361,7 @@ function renderLeftRail(){
       ${layers.map(l=>`<div class="layer-item"><div class="layer-left"><div class="ldot ${l.dot}"></div><div><div class="layer-name">${l.name}</div><div class="layer-sub">${l.sub}</div></div></div><div class="layer-count">${l.count}</div></div>`).join('')}
     </div>
     <div class="g-panel">
-      <div class="sec-head"><h3>Nuclear Watch</h3><span class="badge">RADIATION</span></div>
+      <div class="sec-head"><h3>${t('panels.nuclearWatch', 'Nuclear Watch')}</h3><span class="badge">RADIATION</span></div>
       <div class="nuke-ok">${allNormal?'&#9679; ALL SITES NORMAL':'&#9888; ANOMALY DETECTED'}</div>
       ${nukeHtml}
     </div>
@@ -402,7 +418,7 @@ function initMap(){
   // Legend
   document.getElementById('mapLegend').innerHTML=
     [{c:'var(--accent)',l:'Air Traffic'},{c:'var(--danger)',l:'Thermal/Fire'},{c:'rgba(255,120,80,0.8)',l:'Conflict'},{c:'var(--accent2)',l:'SDR Receiver'},
-     {c:'#ffe082',l:'Nuclear Site'},{c:'#b388ff',l:'Chokepoint'},{c:'var(--warn)',l:'OSINT Event'},{c:'#69f0ae',l:'Health Alert'},{c:'#81d4fa',l:'World News'}]
+     {c:'#ffe082',l:t('map.nuclearSite','Nuclear Site')},{c:'#b388ff',l:t('map.chokepoint','Chokepoint')},{c:'var(--warn)',l:t('map.osintEvent','OSINT Event')},{c:'#69f0ae',l:t('map.healthAlert','Health Alert')},{c:'#81d4fa',l:t('map.worldNews','World News')}]
     .map(x=>`<div class="leg-item"><div class="leg-dot" style="background:${x.c}"></div>${x.l}</div>`).join('');
 }
 
@@ -862,13 +878,13 @@ function renderLower(){
 
   document.getElementById('lowerGrid').innerHTML=`
     <div class="g-panel lp-ticker" style="display:flex;flex-direction:column">
-      <div class="sec-head"><h3>Live News Ticker</h3><span class="badge">${feed.length} ITEMS</span></div>
+      <div class="sec-head"><h3>${t('panels.newsTicker', 'Live News Ticker')}</h3><span class="badge">${feed.length} ITEMS</span></div>
       <div class="ticker-wrap" style="--ticker-duration:${tickerDuration}s">
         <div class="ticker-track">${tickerCards}${tickerCards}</div>
       </div>
     </div>
     <div class="g-panel lp-delta">
-      <div class="sec-head"><h3>Sweep Delta</h3><span class="badge ${dirClass}">${dirEmoji} ${ds.direction?ds.direction.toUpperCase():'BASELINE'}</span></div>
+      <div class="sec-head"><h3>${t('panels.sweepDelta', 'Sweep Delta')}</h3><span class="badge ${dirClass}">${dirEmoji} ${ds.direction?ds.direction.toUpperCase():'BASELINE'}</span></div>
       ${hasDelta?`<div style="display:flex;gap:12px;margin-bottom:6px;font-family:var(--mono);font-size:10px">
         <span style="color:var(--dim)">Changes: <span style="color:var(--accent)">${ds.totalChanges}</span></span>
         <span style="color:var(--dim)">Critical: <span style="color:${ds.criticalChanges>0?'var(--warn)':'var(--dim)'}">${ds.criticalChanges||0}</span></span>
@@ -877,7 +893,7 @@ function renderLower(){
       <div class="delta-list">${deltaHtml}</div>
     </div>
     <div class="g-panel lp-macro">
-      <div class="sec-head"><h3>Macro + Markets</h3><span class="badge">${mkt.timestamp?'LIVE':'DELAYED'}</span></div>
+      <div class="sec-head"><h3>${t('panels.macroMarkets', 'Macro + Markets')}</h3><span class="badge">${mkt.timestamp?'LIVE':'DELAYED'}</span></div>
       ${hasMarkets?`<div style="margin-bottom:8px">
         <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-bottom:4px;letter-spacing:1px">INDEXES</div>
         <div class="metrics-row">${indexCards}</div>
@@ -1060,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {
         // API not ready yet — use inline data as fallback if available
         if (D && D.meta) { init(); }
-        else { document.getElementById('bootLines').innerHTML = '<div style="color:var(--warn)">Waiting for first sweep...</div>'; }
+        else { document.getElementById('bootLines').innerHTML = `<div style="color:var(--warn)">${t('dashboard.waitingForSweep','Waiting for first sweep...')}</div>`; }
         // Retry after a delay
         setTimeout(() => {
           fetch('/api/data').then(r => r.json()).then(data => { D = data; init(); connectSSE(); }).catch(() => {});

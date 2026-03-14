@@ -354,6 +354,7 @@ All settings are in `.env` with sensible defaults:
 |----------|---------|-------------|
 | `PORT` | `3117` | Dashboard server port |
 | `REFRESH_INTERVAL_MINUTES` | `15` | Auto-refresh interval |
+| `LANGUAGE` | `en` | Dashboard & LLM language (`en`, `fr`) |
 | `LLM_PROVIDER` | disabled | `anthropic`, `openai`, `gemini`, or `codex` |
 | `LLM_API_KEY` | — | API key (not needed for codex) |
 | `LLM_MODEL` | per-provider default | Override model selection |
@@ -367,6 +368,45 @@ All settings are in `.env` with sensible defaults:
 | `DISCORD_WEBHOOK_URL` | — | Webhook URL (alert-only fallback, no bot needed) |
 
 Delta engine thresholds (how sensitive the system is to changes between sweeps) can be customized in `crucix.config.mjs` under the `delta.thresholds` section. The defaults are tuned to filter out noise while catching meaningful moves.
+
+---
+
+## Internationalization (i18n)
+
+Crucix supports multiple languages for both the dashboard UI and LLM-generated content.
+
+### Supported Languages
+
+| Code | Language |
+|------|----------|
+| `en` | English (default) |
+| `fr` | Français |
+
+### Configuration
+
+Set the `LANGUAGE` environment variable in your `.env`:
+
+```bash
+LANGUAGE=fr
+```
+
+### What Gets Translated
+
+- **Dashboard UI**: Panel titles, labels, map legends, badges
+- **LLM Output**: Trade ideas are generated in the selected language
+- **Bot Messages**: Telegram/Discord bot responses (coming soon)
+
+### Adding a New Language
+
+1. Copy `locales/en.json` to `locales/xx.json` (where `xx` is the language code)
+2. Translate all strings in the new file
+3. The system will automatically detect and use the new locale
+
+### API
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/locales` | List supported locales and current language |
 
 ---
 

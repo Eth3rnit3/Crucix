@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "code": "en",
+    "name": "English",
+    "nativeName": "English"
+  },
+  "dashboard": {
+    "title": "CRUCIX — Intelligence Terminal",
+    "bootTitle": "CRUCIX INTELLIGENCE ENGINE",
+    "bootSubtitle": "Local Palantir · 26 Sources",
+    "waitingForSweep": "Waiting for first sweep...",
+    "sourcesOk": "Sources OK",
+    "lastSweep": "Last sweep",
+    "nextSweep": "Next sweep"
+  },
+  "panels": {
+    "tradeIdeas": "Trade Ideas",
+    "osintFeed": "OSINT Feed",
+    "nuclearWatch": "Nuclear Watch",
+    "newsTicker": "Live News Ticker",
+    "sweepDelta": "Sweep Delta",
+    "macroMarkets": "Macro + Markets",
+    "healthAlerts": "Health Alerts"
+  },
+  "map": {
+    "worldNews": "World News",
+    "healthAlert": "Health Alert",
+    "chokepoint": "Chokepoint",
+    "nuclearSite": "Nuclear Site",
+    "osintEvent": "OSINT Event",
+    "thermalDetection": "Thermal Detection",
+    "aircraft": "Aircraft",
+    "rssGeolocated": "RSS geolocated"
+  },
+  "ideas": {
+    "confidence": "Confidence",
+    "horizon": "Horizon",
+    "risk": "Risk",
+    "signals": "Signals",
+    "rationale": "Rationale"
+  },
+  "regions": {
+    "world": "World",
+    "americas": "Americas",
+    "europe": "Europe",
+    "middleEast": "Middle East",
+    "asiaPacific": "Asia Pacific",
+    "africa": "Africa"
+  },
+  "badges": {
+    "radiation": "RADIATION",
+    "live": "LIVE",
+    "delayed": "DELAYED",
+    "items": "ITEMS",
+    "urgent": "urgent"
+  },
+  "delta": {
+    "baseline": "BASELINE",
+    "escalation": "ESCALATION",
+    "deescalation": "DE-ESCALATION",
+    "stable": "STABLE",
+    "newSignals": "New Signals",
+    "resolved": "Resolved"
+  },
+  "bot": {
+    "commands": {
+      "status": "Get current system health, last sweep time, source status",
+      "sweep": "Trigger a manual sweep cycle",
+      "brief": "Get a compact text summary of the latest intelligence",
+      "portfolio": "Show current positions and P&L (if Alpaca connected)",
+      "alerts": "Show recent alert history",
+      "mute": "Mute alerts for 1h (or /mute 2h, /mute 4h)",
+      "unmute": "Resume alerts",
+      "help": "Show available commands"
+    },
+    "messages": {
+      "alertsMuted": "Alerts muted for {hours}h — until {time}",
+      "useUnmute": "Use /unmute to resume.",
+      "alertsResumed": "Alerts resumed",
+      "sweepTriggered": "Manual sweep triggered...",
+      "commandsTip": "Tip: Commands are case-insensitive"
+    }
+  },
+  "llm": {
+    "systemPrompt": "You are a quantitative analyst at a macro intelligence firm. You receive structured OSINT + economic data from 25 sources and produce 5-8 actionable trade ideas.\n\nRules:\n- Each idea must cite specific data points from the input\n- Include entry rationale, risk factors, and time horizon\n- Blend geopolitical, economic, and market signals — cross-correlate across domains\n- Be specific: name instruments (tickers, futures, ETFs), not vague sectors\n- If delta shows significant changes, lead with those\n- Do NOT repeat ideas from the \"previous ideas\" list unless conditions have materially changed\n- Rate confidence: HIGH (multiple confirming signals), MEDIUM (thesis supported), LOW (speculative)\n\nOutput ONLY valid JSON array. Each object:\n{\n  \"title\": \"Short title (max 10 words)\",\n  \"type\": \"LONG|SHORT|HEDGE|WATCH|AVOID\",\n  \"ticker\": \"Primary instrument\",\n  \"confidence\": \"HIGH|MEDIUM|LOW\",\n  \"rationale\": \"2-3 sentence explanation citing specific data\",\n  \"risk\": \"Key risk factor\",\n  \"horizon\": \"Intraday|Days|Weeks|Months\",\n  \"signals\": [\"signal1\", \"signal2\"]\n}"
+  }
+}
