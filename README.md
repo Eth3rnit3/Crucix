@@ -354,7 +354,7 @@ All settings are in `.env` with sensible defaults:
 |----------|---------|-------------|
 | `PORT` | `3117` | Dashboard server port |
 | `REFRESH_INTERVAL_MINUTES` | `15` | Auto-refresh interval |
-| `LANGUAGE` | `en` | Dashboard & LLM language (`en`, `fr`) |
+| `CRUCIX_LANG` | `en` | Dashboard & LLM language (`en`, `fr`) |
 | `LLM_PROVIDER` | disabled | `anthropic`, `openai`, `gemini`, or `codex` |
 | `LLM_API_KEY` | — | API key (not needed for codex) |
 | `LLM_MODEL` | per-provider default | Override model selection |
@@ -384,11 +384,13 @@ Crucix supports multiple languages for both the dashboard UI and LLM-generated c
 
 ### Configuration
 
-Set the `LANGUAGE` environment variable in your `.env`:
+Set the `CRUCIX_LANG` environment variable in your `.env`:
 
 ```bash
-LANGUAGE=fr
+CRUCIX_LANG=fr
 ```
+
+> **Note:** We use `CRUCIX_LANG` instead of `LANGUAGE` because `LANGUAGE` is a reserved system variable on Linux/Unix that cannot be overridden via `.env` files.
 
 ### What Gets Translated
 

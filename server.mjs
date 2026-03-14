@@ -238,7 +238,9 @@ app.get('/', (req, res) => {
   
   // Inject locale data into the HTML
   const locale = getLocale();
-  const localeScript = `<script>window.__CRUCIX_LOCALE__ = ${JSON.stringify(locale)};</script>`;
+  // Escape </script> to prevent XSS when locale contains user-controlled strings
+  const safeJSON = JSON.stringify(locale).replace(/</g, '\\u003c');
+  const localeScript = `<script>window.__CRUCIX_LOCALE__ = ${safeJSON};</script>`;
   html = html.replace('</head>', `${localeScript}\n</head>`);
   
   res.type('html').send(html);

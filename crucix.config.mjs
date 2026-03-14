@@ -8,7 +8,8 @@ export default {
   
   // Internationalization (i18n)
   // Supported: 'en' (English), 'fr' (French)
-  language: process.env.LANGUAGE || 'en',
+  // CRUCIX_LANG avoids conflict with Linux system LANGUAGE variable
+  language: process.env.CRUCIX_LANG || process.env.LANGUAGE || 'en',
 
   llm: {
     provider: process.env.LLM_PROVIDER || null, // anthropic | openai | gemini | codex
